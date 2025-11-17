@@ -64,7 +64,7 @@ CREATE TABLE [ordens_servico] (
   [data_entrada] datetime DEFAULT (CURRENT_TIMESTAMP),
   [data_saida] datetime,
   [status] varchar(20) DEFAULT 'ABERTA',
-  [observacoes] text,
+  [observacoes] varchar(max),
   [orcamento] decimal(12,2) DEFAULT (0),
   [criado_em] datetime DEFAULT (CURRENT_TIMESTAMP),
   [atualizado_em] datetime DEFAULT (CURRENT_TIMESTAMP)
@@ -99,76 +99,6 @@ CREATE TABLE [servicos_realizados] (
   [tempo_gasto] decimal(6,2) DEFAULT (0),
   [criado_em] datetime DEFAULT (CURRENT_TIMESTAMP)
 )
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Clientes da oficina',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'clientes';
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Endereços dos clientes',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'endereco';
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Veículos dos clientes',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'veiculos';
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Funcionários da oficina',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'funcionarios';
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Catálogo de serviços',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'servicos';
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Peças em estoque',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'pecas';
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Ordens de serviço (OS)',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'ordens_servico';
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Serviços aplicados na OS',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'itens_servico';
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Peças utilizadas na OS',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'itens_peca';
-GO
-
-EXEC sp_addextendedproperty
-@name = N'Table_Description',
-@value = 'Registro de serviços executados',
-@level0type = N'Schema', @level0name = 'dbo',
-@level1type = N'Table',  @level1name = 'servicos_realizados';
 GO
 
 ALTER TABLE [endereco] ADD FOREIGN KEY ([id_cliente]) REFERENCES [clientes] ([id_cliente])
