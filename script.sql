@@ -34,8 +34,8 @@ CREATE TABLE [clientes] (
   [cpf] char(11),
   [telefone] varchar(20),
   [email] varchar(255),
-  [criado_em] datetime DEFAULT (CURRENT_TIMESTAMP),
-  [atualizado_em] datetime DEFAULT (CURRENT_TIMESTAMP)
+  [criado_em] smalldatetime DEFAULT (CURRENT_TIMESTAMP),
+  [atualizado_em] smalldatetime DEFAULT (CURRENT_TIMESTAMP)
 )
 GO
 
@@ -48,7 +48,7 @@ CREATE TABLE [endereco] (
   [rua] varchar(100),
   [numero] varchar(20),
   [cep] char(8),
-  [criado_em] datetime DEFAULT (CURRENT_TIMESTAMP)
+  [criado_em] smalldatetime DEFAULT (CURRENT_TIMESTAMP)
 )
 GO
 
@@ -60,7 +60,7 @@ CREATE TABLE [veiculos] (
   [modelo] varchar(50),
   [ano] smallint,
   [km_atual] int DEFAULT (0),
-  [criado_em] datetime DEFAULT (CURRENT_TIMESTAMP)
+  [criado_em] smalldatetime DEFAULT (CURRENT_TIMESTAMP)
 )
 GO
 
@@ -68,7 +68,7 @@ CREATE TABLE [funcionarios] (
   [id_funcionario] int PRIMARY KEY IDENTITY(1, 1),
   [nome] varchar(100) NOT NULL,
   [cargo] varchar(50),
-  [criado_em] datetime DEFAULT (CURRENT_TIMESTAMP)
+  [criado_em] smalldatetime DEFAULT (CURRENT_TIMESTAMP)
 )
 GO
 
@@ -91,13 +91,13 @@ GO
 CREATE TABLE [ordens_servico] (
   [id_ordem] int PRIMARY KEY IDENTITY(1, 1),
   [id_veiculo] int NOT NULL,
-  [data_entrada] datetime DEFAULT (CURRENT_TIMESTAMP),
-  [data_saida] datetime,
+  [data_entrada] smalldatetime DEFAULT (CURRENT_TIMESTAMP),
+  [data_saida] smalldatetime,
   [status] varchar(20) DEFAULT 'ABERTA',
   [observacoes] varchar(max),
   [orcamento] decimal(12,2) DEFAULT (0),
-  [criado_em] datetime DEFAULT (CURRENT_TIMESTAMP),
-  [atualizado_em] datetime DEFAULT (CURRENT_TIMESTAMP)
+  [criado_em] smalldatetime DEFAULT (CURRENT_TIMESTAMP),
+  [atualizado_em] smalldatetime DEFAULT (CURRENT_TIMESTAMP)
 )
 GO
 
