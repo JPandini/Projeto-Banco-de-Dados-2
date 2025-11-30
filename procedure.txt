@@ -1,0 +1,57 @@
+P3- Qual o custo total (orçamento) e o tempo total gasto em serviços para um modelo de veículo específico, detalhado por placa.
+
+SELECT
+    V.modelo AS Modelo_Veiculo,
+    V.placa AS Placa,
+    SUM(O.orcamento) AS Custo_Total,
+    SUM(SR.tempo_gasto) AS Tempo_Total_Horas
+FROM
+    veiculos V
+JOIN
+    ordens_servico O ON V.id_veiculo = O.id_veiculo
+JOIN
+    servicos_realizados SR ON O.id_ordem = SR.id_ordem
+WHERE
+    V.modelo = 'Onix' -- Mude 'Onix' para o modelo desejado
+GROUP BY
+    V.modelo, V.placa;
+
+
+
+
+
+1 - Stored Procedure  Consulta de custos e tempo por modelo de veículo
+
+
+CREATE PROCEDURE sp_ResumoPorModelo
+    @Modelo VARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        V.modelo AS Modelo_Veiculo,
+        V.placa AS Placa,
+        SUM(O.orcamento) AS Custo_Total,
+        SUM(SR.tempo_gasto) AS Tempo_Total_Horas
+    FROM
+        veiculos V
+    JOIN
+        ordens_servico O ON V.id_veiculo = O.id_veiculo
+    JOIN
+        servicos_realizados SR ON O.id_ordem = SR.id_ordem
+    WHERE
+        V.modelo = @Modelo
+    GROUP BY
+        V.modelo, V.placa;
+END;
+
+ 
+ 2 - Como executar
+
+EXEC sp_ResumoPorModelo 'Onix';
+
+
+Ou qualquer outro modelo:
+
+EXEC sp_ResumoPorModelo 'Gol';
