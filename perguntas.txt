@@ -1,11 +1,94 @@
 1- Quais os 5 clientes que mais gastaram na oficina (somando o total dos orçamentos) e quantos veículos eles possuem.
 
+SELECT TOP 5
+    C.nome AS Nome_Cliente,
+    SUM(O.orcamento) AS Gasto_Total,
+    COUNT(DISTINCT V.id_veiculo) AS Quantidade_Veiculos
+FROM
+    clientes C
+JOIN
+    veiculos V ON C.id_cliente = V.id_cliente
+JOIN
+    ordens_servico O ON V.id_veiculo = O.id_veiculo
+GROUP BY
+    C.id_cliente, C.nome
+ORDER BY
+    Gasto_Total DESC;
+
+
 2- Quais peças cujo preço unitário de venda é o maior, mas que estão com estoque baixo.
+
+SELECT
+    descricao AS Peca,
+    preco_unitario AS Preco_Venda,
+    estoque AS Estoque_Atual
+FROM
+    pecas
+WHERE
+    estoque < 30 -- Define um limite para 'estoque baixo'
+ORDER BY
+    preco_unitario DESC;
+
 
 3- Qual o custo total (orçamento) e o tempo total gasto em serviços para um modelo de veículo específico, detalhado por placa.
 
+SELECT
+    V.modelo AS Modelo_Veiculo,
+    V.placa AS Placa,
+    SUM(O.orcamento) AS Custo_Total,
+    SUM(SR.tempo_gasto) AS Tempo_Total_Horas
+FROM
+    veiculos V
+JOIN
+    ordens_servico O ON V.id_veiculo = O.id_veiculo
+JOIN
+    servicos_realizados SR ON O.id_ordem = SR.id_ordem
+WHERE
+    V.modelo = 'Onix' -- Mude 'Onix' para o modelo desejado
+GROUP BY
+    V.modelo, V.placa;
+
+
 4- Quais clientes que ainda não possuem um registro de endereço vinculado na tabela endereço.
+
+SELECT
+    C.nome AS Cliente_Sem_Endereco,
+    C.email
+FROM
+    clientes C
+LEFT JOIN
+    endereco E ON C.id_cliente = E.id_cliente
+WHERE
+    E.id_cliente IS NULL;
+
 
 5- Quais as peças que possuem estoque positivo (para venda), mas que nunca foram incluídas em nenhuma ordem de serviço.
 
+SELECT
+    P.descricao AS Peca_Em_Estoque_Nao_Usada,
+    P.estoque
+FROM
+    pecas P
+LEFT JOIN
+    itens_peca IP ON P.id_peca = IP.id_peca
+WHERE
+    IP.id_peca IS NULL
+    AND P.estoque > 0;
+
+
 6- Quais veículos que estão cadastrados há mais de um ano, mas que não possuem ordens de serviço abertas ou finalizadas nos últimos 6 meses.
+SELECT
+    V.placa,
+    V.marca,
+    V.modelo,
+    V.criado_em AS Data_Cadastro
+FROM
+    veiculos V
+WHERE
+    V.criado_em < DATEADD(YEAR, -1, CURRENT_TIMESTAMP) -- Cadastrado há mais de 1 ano
+    AND V.id_veiculo NOT IN (
+        SELECT DISTINCT id_veiculo
+        FROM ordens_servico
+        WHERE data_entrada >= DATEADD(MONTH, -6, CURRENT_TIMESTAMP) -- Teve OS nos últimos 6 meses
+    );
+
