@@ -22,3 +22,20 @@ Os scripts estão organizados da seguinte maneira:
 
 - **DML** — Inserção e manipulação de dados para testes  
   Localização: `script/dml`
+
+## Índices<br>
+Os índices abaixo otimizam junções, filtros e agregações.<br>
+CREATE INDEX idx_veiculos_id_cliente<br>
+ON veiculos (id_cliente);<br>
+<br>
+CREATE INDEX idx_ordens_servico_id_veiculo<br>
+ON ordens_servico (id_veiculo);<br>
+<br>
+CREATE INDEX idx_pecas_estoque_preco<br>
+ON pecas (estoque, preco_unitario)<br>
+INCLUDE (descricao);<br>
+<br>
+CREATE INDEX idx_servicos_realizados_idordem<br>
+ON servicos_realizados (id_ordem)<br>
+INCLUDE (tempo_gasto);<br>
+<br>
