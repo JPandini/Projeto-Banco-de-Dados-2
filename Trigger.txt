@@ -1,0 +1,41 @@
+P2- Quais peças cujo preço unitário de venda é o maior, mas que estão com estoque baixo.
+
+SELECT
+    descricao AS Peca,
+    preco_unitario AS Preco_Venda,
+    estoque AS Estoque_Atual
+FROM
+    pecas
+WHERE
+    estoque < 30 -- Define um limite para 'estoque baixo'
+ORDER BY
+    preco_unitario DESC;
+
+1. tabela de alertas
+
+CREATE TABLE alertas_estoque (
+    id_alerta INT IDENTITY(1,1) PRIMARY KEY,
+    id_peca INT NOT NULL,
+    descricao VARCHAR(255),
+    estoque_atual INT,
+    data_alerta DATETIME DEFAULT GETDATE()
+);
+
+2. Criar o Trigger na tabela pecas
+
+CREATE TRIGGER trg_EstoqueBaixo
+ON pecas
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Insere alerta apenas quando o estoque estiver abaixo de 30
+    INSERT INTO alertas_estoque (id_peca, descricao, estoque_atual)
+    SELECT 
+        i.id_peca,
+        i.descricao,
+        i.estoque
+    FROM inserted AS i
+    WHERE i.estoque < 30;
+END;
