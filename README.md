@@ -25,6 +25,7 @@ Os scripts estão organizados da seguinte maneira:
 
 ## Índices<br>
 Os índices abaixo otimizam junções, filtros e agregações.<br>
+<br>
 CREATE INDEX idx_veiculos_id_cliente<br>
 ON veiculos (id_cliente);<br>
 <br>
