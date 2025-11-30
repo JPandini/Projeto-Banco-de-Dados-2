@@ -1,0 +1,37 @@
+P5- Quais as peças que possuem estoque positivo (para venda), mas que nunca foram incluídas em nenhuma ordem de serviço.
+
+SELECT
+    P.descricao AS Peca_Em_Estoque_Nao_Usada,
+    P.estoque
+FROM
+    pecas P
+LEFT JOIN
+    itens_peca IP ON P.id_peca = IP.id_peca
+WHERE
+    IP.id_peca IS NULL
+    AND P.estoque > 0;
+
+
+1 - Function SQL Server — Peças em estoque não utilizadas
+
+    CREATE FUNCTION fn_PecasNaoUsadas()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT
+        P.descricao AS Peca_Em_Estoque_Nao_Usada,
+        P.estoque
+    FROM
+        pecas P
+    LEFT JOIN
+        itens_peca IP ON P.id_peca = IP.id_peca
+    WHERE
+        IP.id_peca IS NULL
+        AND P.estoque > 0
+);
+
+
+2 - Como usar a function
+
+SELECT * FROM fn_PecasNaoUsadas();
