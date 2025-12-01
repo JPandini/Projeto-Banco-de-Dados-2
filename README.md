@@ -64,3 +64,7 @@ Veja a implementação em [index.js](crud/backend/index.js) e em [crudFactory.js
 INCLUDE (tempo_gasto);<br>
 <br>
 [***Código Fonte***](crud)
+
+## Relatório Final
+
+O relatório final está disponível no arquivo [Relatório_Final](Relatório_Final.pdf)
