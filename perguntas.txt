@@ -25,7 +25,7 @@ SELECT
 FROM
     pecas
 WHERE
-    estoque < 30 -- Define um limite para 'estoque baixo'
+    estoque < 30
 ORDER BY
     preco_unitario DESC;
 
@@ -44,7 +44,7 @@ JOIN
 JOIN
     servicos_realizados SR ON O.id_ordem = SR.id_ordem
 WHERE
-    V.modelo = 'Onix' -- Mude 'Onix' para o modelo desejado
+    V.modelo = 'Onix'
 GROUP BY
     V.modelo, V.placa;
 
@@ -85,10 +85,10 @@ SELECT
 FROM
     veiculos V
 WHERE
-    V.criado_em < DATEADD(YEAR, -1, CURRENT_TIMESTAMP) -- Cadastrado há mais de 1 ano
+    V.criado_em < DATEADD(YEAR, -1, CURRENT_TIMESTAMP)
     AND V.id_veiculo NOT IN (
         SELECT DISTINCT id_veiculo
         FROM ordens_servico
-        WHERE data_entrada >= DATEADD(MONTH, -6, CURRENT_TIMESTAMP) -- Teve OS nos últimos 6 meses
+        WHERE data_entrada >= DATEADD(MONTH, -6, CURRENT_TIMESTAMP)
     );
 
