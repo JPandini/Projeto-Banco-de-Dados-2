@@ -5,8 +5,9 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-
-    INSERT INTO alertas_estoque (id_peca, descricao, estoque_atual)
+  -- Insere alerta apenas quando o estoque estiver abaixo de 30
+    
+INSERT INTO alertas_estoque (id_peca, descricao, estoque_atual)
     SELECT 
         i.id_peca,
         i.descricao,
